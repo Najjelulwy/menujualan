@@ -1,43 +1,115 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-    <style>
-        iframe {
-            width: 100%;
-            height: 100vh;
-            border: none;
-           
-        }
-  
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
+  <meta charset="UTF-8">
+  <title>Aplikasi Android HTML</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js');
+  }
+</script>
+  <!-- FontAwesome (ikon) -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
-        .marquee {
-            position: absolute;
-            white-space: nowrap;
-            animation: marquee 10s linear infinite;
-            color: white;
-            font-size: 12px;
-            font-family: Arial, sans-serif;
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        @keyframes marquee {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(200%); }
-        }
-  
-    </style>
+    body, html {
+      height: 100%;
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0;
+    }
+
+    .status-bar {
+      height: 24px;
+      background-color: #000;
+      color: white;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+    }
+
+    .app-content {
+      height: calc(100% - 24px - 60px);
+      overflow-y: auto;
+      padding: 15px;
+    }
+
+    .bottom-nav {
+      height: 60px;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 -1px 6px rgba(0,0,0,0.1);
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 12px;
+      color: #888;
+      transition: 0.2s ease;
+    }
+
+    .nav-item.active {
+      color: #007bff;
+    }
+
+    .nav-item i {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+  </style>
 </head>
 <body>
-   <div class="marquee">RESTORAN PUJISERA ..</div>
 
-   <iframe src="https://script.google.com/macros/s/AKfycby1TvAFM0t33_tpbueMYzao4SiIyt4Qn_kxkOCsTFLDEA-bp8MQ0bm6EQH2JsUFABnJ/exec" scrolling="no"></iframe>
-  
+  <div class="status-bar">
+    <span>12:45</span>
+    <span>📶 🔋</span>
+  </div>
+
+  <div class="app-content" id="mainContent">
+    <h2>Beranda</h2>
+    <p>Selamat datang di aplikasi HTML versi Android!</p>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item active" onclick="changeTab(this, 'Beranda')">
+      <i class="fas fa-home"></i>
+      <span>Beranda</span>
+    </div>
+    <div class="nav-item" onclick="changeTab(this, 'Transaksi')">
+      <i class="fas fa-receipt"></i>
+      <span>Transaksi</span>
+    </div>
+    <div class="nav-item" onclick="changeTab(this, 'Profil')">
+      <i class="fas fa-user"></i>
+      <span>Profil</span>
+    </div>
+  </div>
+
+  <script>
+    function changeTab(el, title) {
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+      el.classList.add('active');
+
+      const content = document.getElementById("mainContent");
+      content.innerHTML = `<h2>${title}</h2><p>Konten untuk halaman ${title}.</p>`;
+    }
+  </script>
+
 </body>
 </html>
